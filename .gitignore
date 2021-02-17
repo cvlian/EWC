@@ -1,0 +1,4 @@
+.vscode/*
+.code/__pycache__/*
+.code/MNIST_data/*
+.dataset/mnistm_data.pkl
