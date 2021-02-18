@@ -60,7 +60,7 @@ Since the size of the MNIST-M dataset is too large to upload here, you want to c
 >>> M.train(tasks=[mnist])
 ```
 
-</br>
+</br></br>
 
 * Create a new model and copy weights of the original model. Compute fisher information matrix and stars (𝜃*).
 
@@ -68,6 +68,8 @@ Since the size of the MNIST-M dataset is too large to upload here, you want to c
 >>> M_ewc1 = model.Model()
 >>> M_ewc1.transfer_model(model=M, prev_tasks=[mnist])
 ```
+
+</br></br>
 
 * Train 2nd dataset **QMNIST** and repeat the model transfer (M_ewc1 -> M_ewc2).
 
@@ -82,6 +84,8 @@ Since the size of the MNIST-M dataset is too large to upload here, you want to c
 >>> M_ewc2.transfer_model(model=M_ewc1, prev_tasks=[mnist, qmnist])
 ```
 
+</br></br>
+
 * Train 3rd dataset **MNIST-M**.
 
 <img src="./img/example_mnistm.png" width="500" height="100" />
@@ -92,6 +96,8 @@ Since the size of the MNIST-M dataset is too large to upload here, you want to c
 >>>M_ewc1.train(tasks=[mnist, qmnist, mnistm])
 >>>M_ewc2.train(tasks=[mnist, qmnist, mnistm])
 ```
+
+</br></br>
 
 * Check how well those EWC models maintain high performance on previous tasks while retaining the ability to learn current tasks.
 
