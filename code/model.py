@@ -21,6 +21,7 @@ class Model:
 
     def __init__(self):
         self.nn = None
+        self.res = []
         self.star_w = []
         self.star_b = []
         self.fisher_w = []
@@ -103,7 +104,7 @@ class Model:
             self.star_w.append(w)
             self.star_b.append(b)
 
-    def compute_fisher(self, tasks):
+    def compute_fisher(self, prev_tasks):
         self.fisher_w = []
         self.fisher_b = []
 
@@ -112,7 +113,7 @@ class Model:
         gradients = K.gradients(output, trained_params)
 
         x = []
-        for task in tasks :
+        for task in prev_tasks :
             n = task['x_train'].shape[0]
             samples = np.random.choice(range(n), 500, replace=False)
             [x.append(d) for d in task['x_train'][samples]]
@@ -120,7 +121,7 @@ class Model:
         x = np.array(x, dtype=np.float32)
         m = x.shape[0]
 
-        sess = tf.InteractiveSession()
+        sess = tf.compat.v1.InteractiveSession()
         sess.run(tf.compat.v1.global_variables_initializer())
 
         evaluated_gradients = np.square(sess.run(gradients, feed_dict={self.nn.input:x}))
@@ -150,21 +151,21 @@ class Model:
         y_pred = self.nn.predict_classes(x, batch_size=200)
         return y_pred
 
-    def train(self, tasks):
+    def train(self, tasks, target=-1):
 
         if self.nn == None :
             self.create_model(classes=10)
         
         out_epoch = EpochLogger(tasks=tasks)
         
-        self.nn.fit(x = tasks[-1]['x_train'],
-                    y = tasks[-1]['y_train'],
+        self.nn.fit(x = tasks[target]['x_train'],
+                    y = tasks[target]['y_train'],
                     epochs = 10,
                     verbose = 0,
                     batch_size=500,
                     callbacks=[out_epoch])
 
-        return out_epoch.get_result()
+        self.res.append(out_epoch.get_result())
 
 if __name__ == '__main__' :
     get_session(gpu_fraction=0.3)

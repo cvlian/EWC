@@ -69,7 +69,7 @@ def visualize_sole_acc(res, maxiter=10, prev_res=None):
 
     plt.show()
 
-def visualize_multi_acc(res, maxiter=10, tasks=3):
+def visualize_multi_acc(models, maxiter=10, tasks=3):
     """
     Plot accuracy (multiple models)
     """
@@ -80,10 +80,10 @@ def visualize_multi_acc(res, maxiter=10, tasks=3):
         for j in range(0, i):
             axs[i, j].axis('off')
         for j in range(i, tasks):
-            for task_name, reports in res[i][j].items() :
-                if j > 0 and task_name in res[i][j-1] :
+            for task_name, reports in models[i].res[j-i].items() :
+                if j > i and task_name in models[i].res[j-i-1] :
                     axs[i, j].plot(list(range(0, maxiter+1)),
-                                   [res[i][j-1][task_name][-1]]+reports[:maxiter],
+                                   [models[i].res[j-i-1][task_name][-1]]+reports[:maxiter],
                                    label=task_name, linewidth=3, clip_on=False)
                 else :
                     axs[i, j].plot(list(range(0, maxiter+1)), 
