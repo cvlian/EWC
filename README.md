@@ -57,6 +57,7 @@ Since the size of the MNIST-M dataset is too large to upload here, you want to c
 ```
 >>> import data, model
 >>> mnist = data.MNISTdata().getTask()
+>>> M = model.Model()
 >>> M.train(tasks=[mnist])
 ```
 
