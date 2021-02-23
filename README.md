@@ -93,9 +93,9 @@ Since the size of the MNIST-M dataset is too large to upload here, you want to c
 
 ```
 >>> mnistm = data.MNIST_Mdata().getTask()
->>>M.train(tasks=[mnist, qmnist, mnistm])
->>>M_ewc1.train(tasks=[mnist, qmnist, mnistm])
->>>M_ewc2.train(tasks=[mnist, qmnist, mnistm])
+>>> M.train(tasks=[mnist, qmnist, mnistm])
+>>> M_ewc1.train(tasks=[mnist, qmnist, mnistm])
+>>> M_ewc2.train(tasks=[mnist, qmnist, mnistm])
 ```
 
 </br></br>
